@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For Logeshprassanna ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+    margin:0;
+    height:100vh;
+    font-family:
+    "Segoe UI",
+    "Apple Color Emoji",
+    "Noto Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    sans-serif;
+
+    background:linear-gradient(135deg,#ff758c,#ff7eb3);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+}
+
+/* card */
+.card{
+    background:rgba(255,255,255,0.15);
+    padding:30px;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 0 25px rgba(0,0,0,0.3);
+    width:90%;
+    max-width:380px;
+    position:relative;
+}
+
+/* image */
+.photo{
+    width:220px;
+    margin-bottom:15px;
+    border-radius:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.25);
+}
+
+/* buttons row */
+.btnRow{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+    margin-top:15px;
+    position:relative;
+    height:70px;
+}
+
+/* buttons */
+button{
+    padding:14px 26px;
+    font-size:18px;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+}
+
+/* yes */
+#yes{
+    background:#ff2e63;
+    color:white;
+}
+
+/* no */
+#no{
+    background:#444;
+    color:white;
+    position:absolute;
+}
+
+/* message */
+#msg{
+    margin-top:12px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* please maama button */
+#pleaseBtn{
+    display:none;
+    background:white;
+    color:#ff2e63;
+    padding:12px 24px;
+    border-radius:14px;
+    font-size:18px;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+/* final screen */
+#final{
+    display:none;
+    font-size:26px;
+    padding:20px;
+}
+
+/* hearts */
+.heart{
+    position:absolute;
+    color:#ff2e63;
+    font-size:22px;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    0%{transform:translateY(-10vh) rotate(0deg);opacity:1;}
+    100%{transform:translateY(110vh) rotate(360deg);opacity:0;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+
+    <img src="bear.png" class="photo">
+
+    <h2>Logeshprassanna, will you be my Valentine? ❤️</h2>
+
+    <div class="btnRow" id="btnRow">
+        <button id="yes" onclick="accepted()">Yes 💖</button>
+        <button id="no">No 😢</button>
+    </div>
+
+    <div id="msg"></div>
+    <button id="pleaseBtn" onclick="accepted()">Please maama 😭❤️</button>
+
+</div>
+
+<div id="final">
+    <h1>YAYYYY!!! 💕</h1>
+    <p>Dear Logeshprassanna, you just made me the happiest person in this world ❤️</p>
+    <p>Thank you for being with me all these years 🌹</p>
+</div>
+
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8f6b2b7f1.mp3?filename=romantic-love-ambient-110885.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+let clicks=0;
+const noBtn=document.getElementById("no");
+const msg=document.getElementById("msg");
+const pleaseBtn=document.getElementById("pleaseBtn");
+const card=document.getElementById("card");
+const btnRow=document.getElementById("btnRow");
+
+/* start music after first tap (mobile restriction fix) */
+document.body.addEventListener("click",()=>{
+    document.getElementById("music").play();
+},{once:true});
+
+/* yes click */
+function accepted(){
+    card.style.display="none";
+    document.getElementById("final").style.display="block";
+}
+
+/* no click */
+function moveButton(){
+
+    clicks++;
+
+    if(clicks==1){
+        msg.innerHTML="Think again 😌";
+    }
+    else if(clicks==2){
+        msg.innerHTML="Please please click Yes 🥺";
+    }
+    else if(clicks>=3){
+        msg.innerHTML="";
+        noBtn.style.display="none";
+        pleaseBtn.style.display="inline-block";
+        return;
+    }
+
+    /* random movement inside card */
+    const rect=btnRow.getBoundingClientRect();
+    const btnWidth=noBtn.offsetWidth;
+    const btnHeight=noBtn.offsetHeight;
+
+    const x=Math.random()*(rect.width-btnWidth);
+    const y=Math.random()*(rect.height-btnHeight);
+
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
+}
+
+noBtn.addEventListener("click",moveButton);
+noBtn.addEventListener("touchstart",function(e){
+    e.preventDefault();
+    moveButton();
+});
+
+/* falling hearts */
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="💗";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),5000);
+}
+setInterval(createHeart,300);
+
+</script>
+
+</body>
+</html>
